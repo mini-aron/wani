@@ -1,0 +1,30 @@
+
+
+.list_box{
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 70%;
+    left: 50%;
+
+    background-color: aqua;
+
+    transform: translateX(-50%);
+}
+
+.list_innerbox{
+    position: relative;
+    
+    width: 17%;
+}   
+
+.list_innerbox img {
+    width: 80%;
+} 
+
+.list_innerbox p {
+    margin: 0;
+    padding: 0;
+}
