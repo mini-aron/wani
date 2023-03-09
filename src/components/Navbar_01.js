@@ -35,12 +35,13 @@ export default function Navbar_01({ changeSetSearchKey }) {
             className={Nav1.form1}
             onSubmit={(e) => {
               e.preventDefault();
-              if (search === null || search === " ") {
-               
+              if (search === null || search === ' ') {
+              
+               console.log("search data Null send")
               }else{
                 console.log("search data send")
-                changeSetSearchKey(search)
-                
+                changeSetSearchKey(search,true)
+
               }
             }}
           >
@@ -50,9 +51,7 @@ export default function Navbar_01({ changeSetSearchKey }) {
               name="webtoonSearch"
               value={search}
               onChange={(e) => {
-                e.preventDefault();
                 setSearch(e.target.value);
-                console.log(e.target.value)
               }}
             ></input>
             <button className={Nav1.button1} type="submit">
