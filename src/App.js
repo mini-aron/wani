@@ -6,9 +6,9 @@ import {
 } from "react-router-dom";
 
 
-import Home from "../src/pages/Home";
-import Webtoon from "../src/pages/Webtoon";
-
+import Home from "./pages/Home";
+import Webtoon from "./pages/Webtoon";
+import Today from "./pages/Today";
 
 
 
@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/webtoon" element={<Webtoon/>}/>
-      
+        <Route path="/today_webtoon" element={<Today/>}/>
       </Routes>
     </Router>
   );

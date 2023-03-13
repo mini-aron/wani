@@ -1,5 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import Nav1 from "./Navbar_01.module.css";
 import miniRogo from "../img/miniRogo.png";
@@ -19,15 +20,17 @@ export default function Navbar_01({ changeSetSearchKey }) {
     <div className={Nav1.MainBox}>
       <div className={Nav1.NavBox}>
         <div className={Nav1.div_01}>
+          <Link to="/">
           <img
             className={Nav1.rogo}
             src={miniRogo}
             alt="이미지 로딩 실패"
-          ></img>
+          />
+          </Link>
           <ul>
-            <li className={Nav1.li1}>홈</li>
-            <li className={Nav1.li1}>웹툰</li>
-            <li className={Nav1.li1}>오늘의 웹툰</li>
+            <li className={Nav1.li1}><Link to="/">홈</Link></li>
+            <li className={Nav1.li1}><Link to="/webtoon">웹툰</Link></li>
+            <li className={Nav1.li1}><Link to="/today_webtoon">오늘의 웹툰</Link></li>
           </ul>
         </div>
         <div className={Nav1.div_02}>
@@ -41,7 +44,6 @@ export default function Navbar_01({ changeSetSearchKey }) {
               }else{
                 console.log("search data send")
                 changeSetSearchKey(search,true)
-
               }
             }}
           >

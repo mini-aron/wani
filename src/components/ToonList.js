@@ -2,20 +2,39 @@ import axios from "axios";
 import React, { Component } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-
 import Toon from "./ToonList.module.css";
-
+import { BsArrowRightCircle , BsArrowLeftCircle} from "react-icons/bs";
 export default function ToonList({
   searchSwitch,
   searchKey,
   service,
   page,
   perPage,
-  updateDay,
-  changeSetSearchKey,
+  updateDay
 }) {
   const [data, setData] = useState([]);
+  const [nextdata,setNextdata] = useState([]);
   const [switchs, setSwitchs] = useState(false);
+  const [maxpage,setMaxpage] = useState(100);
+  const [props,setProps]=useState({
+    searchSwitch: searchSwitch,
+    searchKey: searchKey,
+    service: service,
+    page: page,
+    perPage: perPage,
+    updateDay: updateDay,
+  });
+  const backPage = () => {
+    if(props.page>0)
+    setProps({...props,page:(props.page-1)})
+  }
+  const nextPage = () => {
+    //maxpage구현해야함
+    if(props.page+1<maxpage){
+    setProps({...props,page:(props.page+1)})
+    }
+  }
+    
   console.log(`searchSwitch:${searchSwitch}, switchs:${switchs}`);
   useEffect(() => {
     if (searchSwitch) {
@@ -25,7 +44,8 @@ export default function ToonList({
         )
         .then((res) => {
           setData(res.data.webtoons);
-        //   changeSetSearchKey(null, false);
+          //   changeSetSearchKey(null, false);
+          setSwitchs(true)
           console.log("검색성공");
         })
         .catch((err) => {
@@ -38,28 +58,43 @@ export default function ToonList({
     if (!searchSwitch) {
       axios
         .get(
-          `https://korea-webtoon-api.herokuapp.com/?perPage=${perPage}&page=${page}&service=${service}&updateDay=${updateDay}`
+          `https://korea-webtoon-api.herokuapp.com/?perPage=${props.perPage}&page=${props.page}&service=${props.service}&updateDay=${props.updateDay}`
         )
         .then((res) => {
           setData(res.data.webtoons);
+          console.log(`https://korea-webtoon-api.herokuapp.com/?perPage=${props.perPage}&page=${props.page}&service=${props.service}&updateDay=${props.updateDay}`)
           setSwitchs(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        axios
+        .get(
+          `https://korea-webtoon-api.herokuapp.com/?perPage=${props.perPage}&page=${props.page+1}&service=${props.service}&updateDay=${props.updateDay}`
+        )
+        .then((res) => {
+
+          console.log(res.data.webtoons[0])
+          if(res.data.webtoons[0]===undefined){
+            setMaxpage(props.page+1);
+            console.log(maxpage)
+          }
           
         })
         .catch((err) => {
           console.log(err);
         });
-
-      
     }
-  }, []);
+  },[props.page]);
   console.log(data);
   return (
     <>
+      
       <div className={Toon.list_box}>
         {switchs ? (
           data.map((data) => (
             <div key={data._id} className={Toon.list_innerbox}>
-              <img  className={Toon.list_innerbox_img} src={data.img} />
+              <img className={Toon.list_innerbox_img} src={data.img} />
               <p>{data.title}</p>
             </div>
           ))
@@ -67,11 +102,13 @@ export default function ToonList({
           <p>데이터 가져오는중</p>
         )}
       </div>
-      <div>
-        <button className={`${Toon.button} ${Toon.back_button}`}></button>
-        <div>{page}</div>
-        <button className={`${Toon.button} ${Toon.next_button}`}></button>
-      </div>
+      {searchSwitch?
+      null:
+      <div className={Toon.pagination}>
+      <BsArrowLeftCircle style={{color:`${props.page?"black":"gray"}`,fontSize:"2rem"}} onClick={backPage}/>
+        <p>{props.page+1}</p>
+        <BsArrowRightCircle style={{color:`${props.page+1<maxpage?"black":"gray"}`,fontSize:"2rem"}} onClick={nextPage}/>
+      </div>}
     </>
   );
 }
@@ -80,7 +117,7 @@ ToonList.defaultProps = {
   searchSwitch: false,
   searchKey: " ",
   service: "naver",
-  page: 1,
+  page: 0,
   perPage: 25,
   updateDay: "mon",
 };
