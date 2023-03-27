@@ -94,36 +94,77 @@ export default function ToonList({
   return (
     <>
       {searchSwitch ? null : (
-        <div>
-          {day.map((day) => (
+        <div className={Toon.setList_box}>
+          <div className={Toon.setBar}>
+            {day.map((day) => (
+              <button
+                key={day}
+                className={
+                  props.updateDay === day
+                    ? `${Toon.dayBtnOn}`
+                    : `${Toon.dayBtn}`
+                }
+                onClick={() => {
+                  setProps({ ...props, updateDay: `${day}` });
+                }}
+              >
+                {day}
+              </button>
+            ))}
             <button
-              key={day}
+              className={
+                props.updateDay === "finished"
+                  ? `${Toon.dayBtnOn}`
+                  : `${Toon.dayBtn}`
+              }
               onClick={() => {
-                setProps({ ...props, updateDay: `${day}` });
-                
+                setProps({ ...props, updateDay: "finished" });
               }}
             >
-              {day}
+              완결
             </button>
-          ))}
-          <button
-            onClick={() => {
-              setProps({ ...props, updateDay: "finished" });
-              
-            }}
-          >
-            완결
-          </button>
-          <button onClick={()=>{
-            setProps({...props,service:"naver", updateDay:"naverDaily"})
-          }}>매일+</button>
+            <button
+              className={
+                props.updateDay === "naverDaily"
+                  ? `${Toon.dayPlusBtnOn}`
+                  : `${Toon.dayPlusBtn}`
+              }
+              onClick={() => {
+                setProps({
+                  ...props,
+                  service: "naver",
+                  updateDay: "naverDaily",
+                });
+              }}
+            >
+              매일+
+            </button>
+            <button
+              className={
+                props.service === "naver"
+                  ? `${Toon.serviceBtnN}`
+                  : `${Toon.serviceBtnK}`
+              }
+              onClick={() => {
+                if (props.service === "naver") {
+                  setProps({ ...props,page:1 ,service: "kakao" });
+                } else {
+                  setProps({ ...props,page:1, service: "naver" });
+                }
+              }}
+            >
+              {props.service}
+            </button>
+          </div>
         </div>
       )}
       <div className={Toon.list_box}>
         {switchs ? (
           data.map((data) => (
             <div key={data._id} className={Toon.list_innerbox}>
-              <img className={Toon.list_innerbox_img} src={data.img} />
+              <div className={Toon.list_imgbox}>
+                <img className={Toon.list_innerbox_img} src={data.img} />
+              </div>
               <p>{data.title}</p>
             </div>
           ))

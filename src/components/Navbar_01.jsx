@@ -28,8 +28,7 @@ export default function Navbar_01({ changeSetSearchKey }) {
           />
           </Link>
           <ul>
-            <li className={Nav1.li1}><Link to="/">홈</Link></li>
-            <li className={Nav1.li1}><Link to="/webtoon">웹툰</Link></li>
+            <li className={Nav1.li1}><Link to="/">웹툰</Link></li>
             <li className={Nav1.li1}><Link to="/today_webtoon">오늘의 웹툰</Link></li>
           </ul>
         </div>

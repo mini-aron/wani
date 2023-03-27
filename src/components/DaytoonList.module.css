@@ -1,0 +1,23 @@
+
+.button{
+    cursor: pointer;
+}
+
+.Name{
+    position: relative;
+    width: 50vw;
+    left: 17vw;
+    margin: 0;
+    margin-top: 40px;
+    margin-bottom: 5px;
+}
+
+.line{
+    margin: 0;
+    position: relative;
+    width: 65vw;
+    height: 1.3px;
+    background-color: black;
+    left: 50%;
+    transform: translateX(-50%);
+}
